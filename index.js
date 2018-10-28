@@ -19,7 +19,7 @@ btn.addEventListener('click', function(){
     }
     req.onerror = function()
     {
-        console.log(new Error("error yabn el wes5a...!"));
+        console.log(new Error("Some errors happened here buddy!"));
     }
     req.open('GET', 'https://randomuser.me/api?results=1');
     req.send();
