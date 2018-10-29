@@ -1,14 +1,21 @@
 // TODO: type your JS code here.
 
 let btn = document.getElementById('users');
+let usersContainer = document.querySelector("div.users");
 
-btn.addEventListener('click', function(){
+btn.addEventListener('click', function() {
+
     let req = new XMLHttpRequest();
+    req.onprogress = function ()
+    {
+        usersContainer.innerHTML = '<h3>Fetching Users Data...</h3>'
+    }
+
     req.onreadystatechange = function ()
     {
         if (req.readyState == req.DONE)
         {
-            let usersContainer = document.querySelector("div.users");
+
             let usersHTML = '';
             let results = JSON.parse(req.response);
 
