@@ -2,10 +2,18 @@
 
 let btn = document.getElementById('users');
 let usersContainer = document.querySelector("div.users");
+let menu = document.querySelector('select#Dgetusers');
 
-btn.addEventListener('click', function() {
+btn.addEventListener('click',request_users , false);
+menu.addEventListener('change', function () {
+   request_users(this.value);
+});
+
+function request_users(numberOfUsers) {
 
     let req = new XMLHttpRequest();
+    let url = 'https://randomuser.me/api?results=' + ((typeof numberOfUsers == 'object') ? 5 : numberOfUsers);
+
     req.onprogress = function ()
     {
         usersContainer.innerHTML = '<h3>Fetching Users Data...</h3>'
@@ -27,11 +35,11 @@ btn.addEventListener('click', function() {
 
                 usersHTML += '<div class="user">\n' +
                     '\n' +
-                             '<h3>User number ' +(i+1)+ '</h3>' +
-                             '<p>Name <span>' +results.results[i].name.first+ ' '+results.results[i].name.last+ '</span></p>' +
-                             '<p>Gender: <strong>'+ results.results[i].gender +'</strong> </p>' +
-                             '<p>Address: <span>'+ results.results[i].location.street +'</span></p>'
-                             +'</div>'
+                    '<h3>User number ' +(i+1)+ '</h3>' +
+                    '<p>Name <span>' +results.results[i].name.first+ ' '+results.results[i].name.last+ '</span></p>' +
+                    '<p>Gender: <strong>'+ results.results[i].gender +'</strong> </p>' +
+                    '<p>Address: <span>'+ results.results[i].location.street +'</span></p>'
+                    +'</div>'
             }
             usersContainer.innerHTML = usersHTML;
         }
@@ -40,6 +48,6 @@ btn.addEventListener('click', function() {
     {
         console.log(new Error("Some errors happened here buddy!"));
     }
-    req.open('GET', 'https://randomuser.me/api?results=7');
+    req.open('GET', url);
     req.send();
-}, false);
+}
